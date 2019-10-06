@@ -1,31 +1,31 @@
 export default [
+{
+    path: '/',
+    name: 'login',
+    meta: {
+      title: '登入',
+      hideInMenu: true
+    },
+      component: resolve=>require(['@/view/admin/login/logins.vue'],resolve)
+},
 // {
-//     path: '/',
-//     name: '/',
-//     meta: {
-//       title: '登入',
-//       hideInMenu: true
-//     },
-//       component: resolve=>require(['@/view/login/login.vue'],resolve)
+//   path: '/resign',
+//   name: 'resign',
+//   meta: {
+//     title: '注册',
+//     hideInMenu: true
+//   },
+//     component: resolve=>require(['@/view/admin/login/resign.vue'],resolve)
 // },
 // {
 //   path: '/',
 //   name: '/',
 //   meta: {
-//     title: '登入',
+//     title: 'index - 首页',
 //     hideInMenu: true
 //   },
-//     component: resolve=>require(['@/view/login/login.vue'],resolve)
-// },
-{
-  path: '/',
-  name: '/',
-  meta: {
-    title: 'index - 首页',
-    hideInMenu: true
-  },
-    component: resolve=>require(['@/view/index/index.vue'],resolve)
-},
+//     component: resolve=>require(['@/view/index/index.vue'],resolve)
+//},
 {
   path: '/portal',
   name: 'portal',
