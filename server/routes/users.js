@@ -43,29 +43,48 @@ router.get("/show",function(req,res,next){
      res.render("index.html");
 })
 router.post("/login",function(req,res,next){
-   res.send("huej");
+  var param={
+    "userName":req.body.userName,
+    "userPassword":req.body.userPassword
+  }
+  users.findOne({"userName":"jieke","userPassword":"123456"},function(erro,doc){
+    if(erro){
+      res.json({
+        status:'1',
+        msg:erro.message
+      });
+    }else{
+      res.json({
+        status:"0",
+        msg:'',
+        result:{
+          count:doc.length,
+          list:doc
+        }
+      });
+    }
+  });
 })
 // 解析BODY
-function parseBody(req) {
-    var bufferArr = [];
-    req.on("data", function (data) {
-      bufferArr.push(data);
-    })
-    req.on("end", function () {
-      var postData = Buffer.concat(bufferArr).toString();
-      var params = require("querystring").parse(postData);
-      if (params) req.body = params;
-    })
-}
+// function parseBody(req) {
+//     var bufferArr = [];
+//     req.on("data", function (data) {
+//       bufferArr.push(data);
+//     })
+//     req.on("end", function () {
+//       var postData = Buffer.concat(bufferArr).toString();
+//       var params = require("querystring").parse(postData);
+//       if (params) req.body = params;
+//     })
+// }
 
-request.post({url:'http://www.youxuewang.com.cn/shouji/home/LoadProducts', form: {
-    "pageno": 1,
-    "pagesize": 200,
-    "condstr": "社会大课堂: 0"
-  }}, function(error, response, body) {
-   //console.log(error,response,body)
-    console.log("1233")
-});
-
+// request.post({url:'http://www.youxuewang.com.cn/shouji/home/LoadProducts', form: {
+//     "pageno": 1,
+//     "pagesize": 200,
+//     "condstr": "社会大课堂: 0"
+//   }}, function(error, response, body) {
+//    //console.log(error,response,body)
+//     console.log("1233")
+//   });
 
 module.exports = router;
