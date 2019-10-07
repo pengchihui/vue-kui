@@ -34,10 +34,19 @@ router.get('/', function(req, res, next) {
          }
        });
     }
-
   })
 
 });
+
+router.post("/users/login" ,function(req,res){
+  res.render("index.html");
+})
+
+/* 添加 */
+router.get("/add.html",function(req,res){
+  res.render("add.html");
+})
+
 
 router.post('',(req,res,next)=>{
 
