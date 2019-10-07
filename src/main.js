@@ -24,6 +24,7 @@ Vue.component("footerly",footerly);
 Vue.use(ElementUI);
 Vue.use(iView)
 
+axios.defaults.withCredentials=true //withCredentials默认是false，意思就是不携带cookie信息，那就让它为true
 Vue.prototype.$ajax = axios
 Vue.prototype.qs=qs
 
