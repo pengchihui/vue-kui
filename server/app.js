@@ -4,6 +4,7 @@ var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 var bodyParser=require('body-parser');
+var multer=require("multer");
 
 
 var indexRouter = require('./routes/index');
@@ -19,15 +20,38 @@ app.set('view options', {
   debug: process.env.NODE_ENV !== 'production'
 });
 
+
 app.use(logger('dev'));
-app.use(express.json());
-app.use(express.urlencoded({ extended: false }));
+// 使用 body-parser 中间
+// 这里用到的是extended - 当设置为false时，
+// 会使用querystring库解析URL编码的数据；
+// 当设置为true时，
+// 会使用qs库解析URL编码的数据。后没有指定编码时，使用此编码。默认为true
+
+// parse application/json
+app.use(bodyParser.json());
+// parse application/x-www-form-urlencoded
+app.use(bodyParser.urlencoded({ extended: false }))
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
-
-app.use('/', indexRouter);
+app.use('/index', indexRouter);
 app.use('/users', usersRouter);
+// 创建路由
+app.post("/login", function (req, res) {
+  console.log(req.body);
+  res.send(req.body);
+});
+
+// 跨域设置
+app.all("*", function(req, res, next) {
+  res.header("Access-Control-Allow-Credentials", true);
+  res.header("Access-Control-Allow-Origin", "*");
+  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+  res.header("Access-Control-Allow-Methods", "PUT,POST,GET,DELETE,OPTIONS");
+  res.header("Content-Type", "application/json;charset=utf-8");
+  next();
+});
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
@@ -44,6 +68,5 @@ app.use(function(err, req, res, next) {
   res.status(err.status || 500);
   res.render('error');
 });
-app.listen("8080");
 
 module.exports = app;
