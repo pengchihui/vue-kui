@@ -5,7 +5,7 @@ var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 var bodyParser=require('body-parser');
 var multer=require("multer");
-
+var proxy = require('http-proxy-middleware');
 
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
@@ -37,18 +37,17 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/index', indexRouter);
 app.use('/users', usersRouter);
-// 创建路由
-app.post("/login", function (req, res) {
-  console.log(req.body);
-  res.send(req.body);
-});
 
+app.use(
+  '/api',
+  proxy({ target: 'http://www.example.org', changeOrigin: true })
+);
 // 跨域设置
-app.all("*", function(req, res, next) {
-  res.header("Access-Control-Allow-Credentials", true);
-  res.header("Access-Control-Allow-Origin", "*");
-  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+app.all('*', function (req, res, next) {
+  res.header("Access-Control-Allow-Origin", "http://localhost:3000");
+  res.header('Access-Control-Allow-Headers', 'Content-Type, Content-Length, Authorization, Accept, X-Requested-With , yourHeaderFeild');
   res.header("Access-Control-Allow-Methods", "PUT,POST,GET,DELETE,OPTIONS");
+  res.header("X-Powered-By", ' 3.2.1')
   res.header("Content-Type", "application/json;charset=utf-8");
   next();
 });

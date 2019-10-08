@@ -55,29 +55,16 @@ p{
 export default{
 		name:"register",
 		data(){
-			 var validatePass2 = (rule, value, callback) => {
-        if (value !== this.User.password) {
-          callback(new Error('两次输入密码不一致!'));
-        } else {
-          callback();
-        }
-      };
+
 			return{
 				User:{
 					name:"",
-					email:"",
 					password:"",
-					password2:"",
-					identity:""
+          skip:false
 				},
 				rules:{
 					name:[{required:true,message:"用户名不能为空",trigger:"blur"},{min:2,max:30,message:"长度在2到30个字符串",trigger:'blur'}],
-					email:[{ required: true, message: '请输入邮箱地址', trigger: 'blur' },{type:"email",message:"邮箱格式不对", trigger: ['blur', 'change']}],
 					password:[{required:true,message:"密码不能为空",trigger:"blur"},{min:6,max:30,message:"长度在6到30个字符串",trigger:"blur"}],
-					password2:[{required:true,message:"密码不能为空",trigger:"blur"},
-					{min:6,max:30,message:"长度在6到30个字符串",trigger:"blur"},
-					{validator:validatePass2,trigger:"blur"}],
-					identity:[ { required: true, message: '请选择活动身份', trigger: 'change' }]
 				}
 			}
 		},
@@ -85,27 +72,46 @@ export default{
       submitForm(formName) {
         this.$refs[formName].validate((valid) => {
           if (valid) {
-            $.ajax({
-              type:"post",// get或者post
-              url:"http://localhost:3000/users/login",// 请求的url地址
-              data:{
-                "userName":this.User.name,
-                "userPassword":this.User.password
-              },//请求的参数
-              dataType:"json",//json写了jq会帮我们转换成数组或者对象 他已经用JSON.parse弄好了
-              timeout:3000,//3秒后提示错误
-              beforeSend:function(){
-                // 发送之前就会进入这个函数
-                // return false 这个ajax就停止了不会发 如果没有return false 就会继续
-              },
-              success:function(data){ // 成功拿到结果放到这个函数 data就是拿到的结果
-                console.log(data)
-              },
-              error:function(){//失败的函数
-              },
-              complete:function(){//不管成功还是失败 都会进这个函数
-              }
-            })
+            this.$ajax.post('http://localhost:3000/users/login',
+              this.qs.stringify({
+                userName:this.User.name,
+                userPassword:this.User.password
+              }))
+              .then(function (response) {
+                console.log(response);
+              })
+              .catch(function (error) {
+                console.log(error);
+
+              });
+
+            // this.$ajax.jsonp( 'https://api.douban.com//v2/movie/top250',{},
+            //   { emulateJSON: true}).then(function(response){
+            //   this.movie = response.data;
+            //   console.log(this.movie);
+            // },function(err){"kuaiyushibai"});
+
+            // $.ajax({
+            //   type:"post",// get或者post
+            //   url:"http://localhost:3000/users/login",// 请求的url地址
+            //   data:{
+            //     "userName":this.User.name,
+            //     "userPassword":this.User.password
+            //   },//请求的参数
+            //   dataType:"json",//json写了jq会帮我们转换成数组或者对象 他已经用JSON.parse弄好了
+            //   timeout:3000,//3秒后提示错误
+            //   beforeSend:function(){
+            //     // 发送之前就会进入这个函数
+            //     // return false 这个ajax就停止了不会发 如果没有return false 就会继续
+            //   },
+            //   success:function(data){ // 成功拿到结果放到这个函数 data就是拿到的结果
+            //     console.log(data)
+            //   },
+            //   error:function(){//失败的函数
+            //   },
+            //   complete:function(){//不管成功还是失败 都会进这个函数
+            //   }
+            // })
 
             } else {
             console.log('error submit!!');
