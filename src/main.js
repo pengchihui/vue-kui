@@ -10,7 +10,7 @@ import 'element-ui/lib/theme-chalk/index.css';
 import $ from 'jquery';
 import store from './store/list.js'
 import axios from './libs/axios.js'   //请求默认配置
-import qs from 'qs';  //作用能把json格式的直接转成data所需的格式
+import qs from 'qs';  //作用能把json格式的直接转成data所需的格式 解决跨域问题
 import iView from 'iview';
 import 'iview/dist/styles/iview.css';  //iview框架 及 样式
 import 'lib-flexible';
