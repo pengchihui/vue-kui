@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+
+  <style>
+  #box{
+    width: 100px;
+    height: 100px;
+    background:pink;
+    animation: box 1s linear infinite;
+    animation: boxid 1s linear infinite;
+  }
+
+  @keyframes  box{
+     from{
+         width: 200px;
+         height: 200px;
+     }to{
+        width:400px;
+        height: 400px;
+     }
+  }
+  /* 兼容性比前面的好*/
+  @keyframes boxid{
+    0%{
+     background: grey;
+    }
+    25%{
+      background: palegoldenrod;
+    }
+    50%{
+      background: seagreen;
+    }
+    100%{
+      background: palevioletred;
+    }
+  }
+
+  </style>
+</head>
+<body>
+  <div id="box">
+
+
+
+  </div>
+
+  <script>
+
+
+
+  </script>
+
+
+</body>
+</html>

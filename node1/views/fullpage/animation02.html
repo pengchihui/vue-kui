@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+  <style>
+     #box {
+       width: 200px;
+       height: 200px;
+       background:pink;
+       animation-name: change;
+       animation-duration: 1s;
+       animation-timing-function:linear;
+
+       /*方向*/
+
+       animation-direction: reverse;
+
+       /*延迟*/
+       animation-iteration-count: 10;
+
+       /*播放状态 反反向 交替*/
+       animation-play-state: initial;
+
+
+     }
+
+    @keyframes change {
+        0%{
+          background:lightpink;
+        }
+        50%{
+          background:indianred;
+        }
+        100%{
+          background: #00B7FF;
+        }
+
+    }
+
+  </style>
+</head>
+<body>
+<div id="box">
+
+</div>
+
+
+</body>
+</html>
