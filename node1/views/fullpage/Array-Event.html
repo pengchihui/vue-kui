@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+<input type="button" value="es6方式">
+<input type="button" value="数组方式">
+
+<script>
+   /*attachEvent this指向window addEventLister this指向 dom*/
+   //elem dom元素  type类型  handle 事件处理函数
+   function addEvent(elem,type,fn){
+     if(elem.addEventListener){
+       //Chrome、Safari、Firefox、Opera、IE9.0及其以上版本
+       elem.addEventListener(type,fn,false);
+     }else if(elem.attachEvent){
+       //IE8.0及其以下版本
+       elem.attachEvent('on'+type,function(){
+         fn.call(elem);  //call中的this指向window
+       })
+     }else{
+       //早起浏览器
+       elem['on'+type] = fn;
+     }
+   }
+   function inits(){
+     var one=document.querySelector("input[type=button]");
+     var two=document.getElementsByTagName("input")[1];
+     addEvent(one,'click',function(){  console.log( [...new Array(100).keys()]) });
+     addEvent(two,'click',function(){
+        var arr=new Array(100);
+
+     })
+   }
+   inits();
+   function addEvents(el,etype,fn){
+        if(el.addEventListener){
+            el.addEventListener(etype,fn,false);
+        }else if(el.attachEvent){
+            el.attachEvent('on'+etype,function(){
+                fn.call(el);
+            })
+        }else{
+            el['on'+etype]=fn;
+        }
+   }
+
+
+</script>
+
+</body>
+</html>
